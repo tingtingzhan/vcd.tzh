@@ -38,7 +38,6 @@ cut.Kappa <- function(
 #' @importFrom stats coef
 #' @export
 coef.Kappa <- function(object, ...) {
-  # packageDate('vcd') 2024-09-16
   # funny way of returned object (eh..)
   vapply(object[c('Unweighted', 'Weighted')], FUN = `[`, 'value', FUN.VALUE = NA_real_)
 }
@@ -62,7 +61,7 @@ nobs.Kappa <- function(object, ...) NA_integer_ # impossible to retrieve..
 .pval.Kappa <- function(x) {
   # ?vcd:::print.Kappa; eh..
   # ?vcd:::summary.Kappa; this author is crazy..
-  vapply(x[c('Unweighted', 'Weighted')], FUN = function(i) {
+  vapply(x[c('Unweighted', 'Weighted')], FUN = \(i) {
     2 * pnorm(abs(i[1L]/i[2L]), lower.tail = FALSE)
   }, FUN.VALUE = NA_real_)
 }

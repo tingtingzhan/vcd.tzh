@@ -80,7 +80,7 @@ endpoint.Kappa <- function(x) quote(Agreement)
 #' @rdname S3_Kappa
 #' @export
 Sprintf.Kappa <- function(x) {
-  'Cohen\'s $\\kappa$ coefficient of agreement is provided by <u>**`R`**</u> package <u>**`vcd`**</u>.'
+  '[Cohen\'s $\\kappa$ coefficient of agreement](https://en.wikipedia.org/wiki/Cohen%27s_kappa) is provided by <u>**`R`**</u> package <u>**`vcd`**</u>.'
 }
 
 

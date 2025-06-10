@@ -81,7 +81,7 @@ endpoint.Kappa <- function(x) quote(Agreement)
 #' @importFrom utils bibentry
 #' @export
 Sprintf.Kappa <- function(x) {
-  ret <- '[Cohen\'s $\\kappa$ coefficient of agreement](https://en.wikipedia.org/wiki/Cohen%27s_kappa) [@] is provided by <u>**`R`**</u> package <u>**`vcd`**</u>.'
+  ret <- '[Cohen\'s $\\kappa$ coefficient of agreement](https://en.wikipedia.org/wiki/Cohen%27s_kappa) [@Cohen60] is provided by <u>**`R`**</u> package <u>**`vcd`**</u>.'
   attr(ret, which = 'bibentry') <- bibentry(
     bibtype = 'article', 
     key = 'Cohen60',

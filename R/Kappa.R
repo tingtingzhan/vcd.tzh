@@ -78,9 +78,23 @@ endpoint.Kappa <- function(x) quote(Agreement)
 
 
 #' @rdname S3_Kappa
+#' @importFrom utils bibentry
 #' @export
 Sprintf.Kappa <- function(x) {
-  '[Cohen\'s $\\kappa$ coefficient of agreement](https://en.wikipedia.org/wiki/Cohen%27s_kappa) is provided by <u>**`R`**</u> package <u>**`vcd`**</u>.'
+  ret <- '[Cohen\'s $\\kappa$ coefficient of agreement](https://en.wikipedia.org/wiki/Cohen%27s_kappa) [@] is provided by <u>**`R`**</u> package <u>**`vcd`**</u>.'
+  attr(ret, which = 'bibentry') <- bibentry(
+    bibtype = 'article', 
+    key = 'Cohen60',
+    author = 'Jacob Cohen',
+    title = 'A Coefficient of Agreement for Nominal Scales',
+    journal = 'Educational and Psychological Measurement',
+    volume = '20',
+    number = '1',
+    pages = '37--46',
+    year = '1960',
+    doi = '10.1177/001316446002000104',
+  )
+  return(ret)
 }
 
 

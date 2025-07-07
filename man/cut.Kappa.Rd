@@ -4,28 +4,17 @@
 \alias{cut.Kappa}
 \title{cut.Kappa}
 \usage{
-\method{cut}{Kappa}(
-  x,
-  breaks = c(-Inf, 0, 0.2, 0.4, 0.6, 0.8, 1),
-  labels = c("no", "slight", "fair", "moderate", "substantial", "almost perfect"),
-  right = TRUE,
-  include.lowest = TRUE,
-  ...
-)
+\method{cut}{Kappa}(x, ...)
 }
 \arguments{
 \item{x}{a \link[vcd]{Kappa} object}
 
-\item{breaks, labels, right, include.lowest, ...}{parameters of function \link[base]{cut.default}}
+\item{...}{trivial parameters of function \link[base]{cut.default}}
 }
 \description{
 cut.Kappa
 }
-\examples{
-library(vcd)
-(job1 = xtabs(Freq ~ supervisor + own, data = JobSatisfaction))
-(job2 = xtabs(Freq ~ management + own, data = JobSatisfaction))
-job1 |> Kappa() |> cut()
-job2 |> Kappa() |> cut()
+\note{
+Hard-coded cut-off values from \url{https://en.wikipedia.org/wiki/Cohen\%27s_kappa#Interpreting_magnitude}.
 }
 \keyword{internal}

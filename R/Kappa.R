@@ -1,6 +1,71 @@
 
+#' @title Kappa with input confusion matrix
+#' 
+#' @param x see function \link[vcd]{Kappa}
+#' 
+#' @param ... additional parameters of function \link[vcd]{Kappa}
+#' 
+#' @details
+#' Function \link[vcd]{Kappa} does not keep any info of the input (eh..)
+#' 
+#' @examples
+#' data('JobSatisfaction', package = 'vcd')
+#' (job1 = xtabs(Freq ~ supervisor + own, data = JobSatisfaction))
+#' (job2 = xtabs(Freq ~ management + own, data = JobSatisfaction))
+#' 
+#' library(rmd.tzh)
+#' 
+#' list(
+#'   'supervisor vs. own' = job1 |> vcd::Kappa(),
+#'   'management vs. own' = job2 |> vcd::Kappa()
+#' ) |> render_(file = 'Kappa')
+#' 
+#' list(
+#'   'supervisor vs. own' = job1 |> Kappa2(),
+#'   'management vs. own' = job2 |> Kappa2()
+#' ) |> render_(file = 'Kappa2')
+#' @keywords internal
+#' @importFrom vcd Kappa
+#' @export
+Kappa2 <- function(x, ...) {
+  ret <- Kappa(x, ...)
+  attr(ret, which = 'x') <- x
+  class(ret) <- c('Kappa2', class(ret)) |> unique.default()
+  return(ret)
+}
 
-# ?vcd::Kappa does not keep any info of the input (eh..)
+
+
+#' @title R Markdown Lines for \link[vcd]{Kappa} or [Kappa2]
+#' 
+#' @param x \link[vcd]{Kappa} or [Kappa2] object
+#' 
+#' @param xnm ..
+#' 
+#' @param ... ..
+#' 
+#' @keywords internal
+#' @importFrom rmd.tzh md_
+#' @export md_.Kappa
+#' @export 
+md_.Kappa <- function(x, xnm, ...) {
+  txt <- Sprintf.Kappa(x)
+  ret <- c(
+    txt
+  )
+  if (inherits(x, what = 'Kappa2')) {
+    ret <- c(
+      ret,
+      '```{r}',
+      sprintf(fmt = '%s |> attr(which = \'x\', exact = TRUE) |> as_flextable(include.row_percent = FALSE, include.column_percent = FALSE, include.table_percent = FALSE)', xnm),
+      '```', 
+      '<any-text>'
+    )
+  }
+  attr(ret, which = 'bibentry') <- attr(txt, which = 'bibentry', exact = TRUE)
+  return(ret)
+}
+
 
 
 
@@ -8,30 +73,23 @@
 #' 
 #' @param x a \link[vcd]{Kappa} object
 #' 
-#' @param breaks,labels,right,include.lowest,... parameters of function \link[base]{cut.default}
+#' @param ... trivial parameters of function \link[base]{cut.default}
 #' 
-#' @examples
-#' library(vcd)
-#' (job1 = xtabs(Freq ~ supervisor + own, data = JobSatisfaction))
-#' (job2 = xtabs(Freq ~ management + own, data = JobSatisfaction))
-#' job1 |> Kappa() |> cut()
-#' job2 |> Kappa() |> cut()
+#' @note
+#' Hard-coded cut-off values from \url{https://en.wikipedia.org/wiki/Cohen%27s_kappa#Interpreting_magnitude}.
+#' 
 #' @keywords internal
 #' @export cut.Kappa
 #' @export
-cut.Kappa <- function(
-    x, 
-    breaks = c(-Inf, 0, .2, .4, .6, .8, 1),
-    labels = c('no', 'slight', 'fair', 'moderate', 'substantial', 'almost perfect'),
-    right = TRUE, include.lowest = TRUE,
-    ...
-) {
-  cut.default(
-    x = coef.Kappa(x),
-    breaks = breaks, labels = labels, 
-    right = right, include.lowest = include.lowest,
-    ...
-  )
+cut.Kappa <- function(x, ...) {
+  x |>
+    coef.Kappa() |>
+    cut.default(
+      breaks = c(-Inf, 0, .2, .4, .6, .8, 1), 
+      labels = c('no ($\\kappa<0$)', 'slight ($0\\leq\\kappa\\leq.2$)', 'fair ($.2<\\kappa\\leq.4$)', 'moderate ($.4<\\kappa\\leq.6$)', 'substantial ($.6<\\kappa\\leq.8$)', 'almost perfect ($.8<\\kappa\\leq 1$)'), 
+      right = TRUE, include.lowest = TRUE,
+      ...
+    )
 }
 
 
@@ -39,7 +97,9 @@ cut.Kappa <- function(
 #' @export
 coef.Kappa <- function(object, ...) {
   # funny way of returned object (eh..)
-  vapply(object[c('Unweighted', 'Weighted')], FUN = `[`, 'value', FUN.VALUE = NA_real_)
+  #object[c('Unweighted', 'Weighted')] |>
+  object[c('Weighted')] |>
+    vapply(FUN = `[`, 'value', FUN.VALUE = NA_real_)
 }
 
 
@@ -61,9 +121,11 @@ nobs.Kappa <- function(object, ...) NA_integer_ # impossible to retrieve..
 .pval.Kappa <- function(x) {
   # ?vcd:::print.Kappa; eh..
   # ?vcd:::summary.Kappa; this author is crazy..
-  vapply(x[c('Unweighted', 'Weighted')], FUN = \(i) {
-    2 * pnorm(abs(i[1L]/i[2L]), lower.tail = FALSE)
-  }, FUN.VALUE = NA_real_)
+  #x[c('Unweighted', 'Weighted')] |>
+  x[c('Weighted')] |>
+    vapply(FUN = \(i) {
+      2 * pnorm(abs(i[1L]/i[2L]), lower.tail = FALSE)
+    }, FUN.VALUE = NA_real_)
 }
 
 
@@ -79,9 +141,18 @@ endpoint.Kappa <- function(x) quote(Agreement)
 
 #' @rdname S3_Kappa
 #' @importFrom utils bibentry
+#' @importFrom stats confint
 #' @export
 Sprintf.Kappa <- function(x) {
-  ret <- '[Cohen\'s $\\kappa$ coefficient of agreement](https://en.wikipedia.org/wiki/Cohen%27s_kappa) [@Cohen60] is provided by <u>**`R`**</u> package <u>**`vcd`**</u>.'
+  
+  ci <- confint(x)['Weighted', ] # ?vcd:::confint.Kappa
+  
+  ret <- sprintf(
+    fmt = '[Cohen\'s $\\kappa$ coefficient of agreement](https://en.wikipedia.org/wiki/Cohen%%27s_kappa) [@Cohen60] $\\kappa=%.2f$, 95%% confidence interval (%.2f, %.2f), reflecting a %s agreement, is provided by <u>**`R`**</u> package <u>**`vcd`**</u>.',
+    x |> coef.Kappa(),
+    ci[1L], ci[2L],
+    x |> cut.Kappa() |> as.character()
+  )
   attr(ret, which = 'bibentry') <- bibentry(
     bibtype = 'article', 
     key = 'Cohen60',

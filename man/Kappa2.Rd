@@ -34,5 +34,12 @@ list(
   'management vs. own' = job2 |> Kappa2()
 ) |> render_(file = 'Kappa2')
 
+list(
+  'sec 1' = list(
+    'abc',
+    job1 |> Kappa2()
+  )
+) |> render_(file = 'Kappa2_v2')
+
 }
 \keyword{internal}

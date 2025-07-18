@@ -57,22 +57,24 @@ Kappa2 <- function(x, ...) {
 #' @export md_.Kappa
 #' @export 
 md_.Kappa <- function(x, xnm, ...) {
-  txt <- Sprintf.Kappa(x)
-  ret <- c(
-    txt
-  )
-  if (inherits(x, what = 'Kappa2')) {
-    ret <- c(
-      ret,
-      '```{r}',
-      sprintf(fmt = '%s |> attr(which = \'x\', exact = TRUE) |> as_flextable(include.row_percent = FALSE, include.column_percent = FALSE, include.table_percent = FALSE)', xnm),
-      '```', 
-      '<any-text>'
-    )
-  }
-  ret <- c(ret, '\n\n') # would never hurt !!
-  attr(ret, which = 'bibentry') <- attr(txt, which = 'bibentry', exact = TRUE)
-  return(ret)
+
+  return(list(
+    
+    Sprintf.Kappa(x), 
+    
+    if (inherits(x, what = 'Kappa2')) {
+      c(
+        '```{r}',
+        sprintf(fmt = '%s |> attr(which = \'x\', exact = TRUE) |> as_flextable(include.row_percent = FALSE, include.column_percent = FALSE, include.table_percent = FALSE)', xnm),
+        '```', 
+        '<any-text>'
+      )
+    }, # else NULL
+    
+    '\n\n' # would never hurt !!
+    
+  ))
+  
 }
 
 

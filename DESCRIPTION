@@ -14,5 +14,5 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Encoding: UTF-8
 License: GPL-2
-Depends: R (>= 4.5)
-Imports: vcd (== 1.4.13), rmd.tzh
+Depends: R (>= 4.5), vcd (== 1.4.13)
+Imports: rmd.tzh

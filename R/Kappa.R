@@ -54,26 +54,43 @@ Kappa2 <- function(x, ...) {
 #' 
 #' @keywords internal
 #' @importFrom rmd.tzh md_
+#' @importFrom stats confint
+#' @importFrom utils bibentry
+#' @importFrom methods new
 #' @export md_.Kappa
 #' @export 
 md_.Kappa <- function(x, xnm, ...) {
 
-  return(list(
-    
-    Sprintf.Kappa(x), 
-    
-    if (inherits(x, what = 'Kappa2')) {
-      c(
-        '```{r}',
-        sprintf(fmt = '%s |> attr(which = \'x\', exact = TRUE) |> as_flextable(include.row_percent = FALSE, include.column_percent = FALSE, include.table_percent = FALSE)', xnm),
-        '```', 
-        '<any-text>'
-      )
-    }, # else NULL
-    
-    '\n\n' # would never hurt !!
-    
-  ))
+  ci <- confint(x)['Weighted', ] # ?vcd:::confint.Kappa
+  
+  z1 <- sprintf(
+    fmt = '[Cohen\'s $\\kappa$ coefficient of agreement](https://en.wikipedia.org/wiki/Cohen%%27s_kappa) [@Cohen60] $\\kappa=%.2f$, 95%% confidence interval (%.2f, %.2f), reflecting a %s agreement, is provided by <u>**`R`**</u> package <u>**`vcd`**</u>.',
+    x |> coef.Kappa(),
+    ci[1L], ci[2L],
+    x |> cut.Kappa() |> as.character()
+  ) |> 
+    new(Class = 'md_lines', bibentry = bibentry(
+      bibtype = 'article', 
+      key = 'Cohen60',
+      author = 'Jacob Cohen',
+      title = 'A Coefficient of Agreement for Nominal Scales',
+      journal = 'Educational and Psychological Measurement',
+      volume = '20',
+      number = '1',
+      pages = '37--46',
+      year = '1960',
+      doi = '10.1177/001316446002000104',
+    ))
+  
+  z2 <- if (inherits(x, what = 'Kappa2')) {
+    c(
+      '```{r}',
+      sprintf(fmt = '%s |> attr(which = \'x\', exact = TRUE) |> as_flextable(include.row_percent = FALSE, include.column_percent = FALSE, include.table_percent = FALSE)', xnm),
+      '```'
+    ) |> new(Class = 'md_lines')
+  } else new(Class = 'md_lines')
+  
+  c(z1, z2) # ?rmd.tzh::c.md_lines
   
 }
 
@@ -149,35 +166,6 @@ endpoint.Kappa <- function(x) quote(Agreement)
 
 
 
-
-#' @rdname S3_Kappa
-#' @importFrom utils bibentry
-#' @importFrom stats confint
-#' @export
-Sprintf.Kappa <- function(x) {
-  
-  ci <- confint(x)['Weighted', ] # ?vcd:::confint.Kappa
-  
-  ret <- sprintf(
-    fmt = '[Cohen\'s $\\kappa$ coefficient of agreement](https://en.wikipedia.org/wiki/Cohen%%27s_kappa) [@Cohen60] $\\kappa=%.2f$, 95%% confidence interval (%.2f, %.2f), reflecting a %s agreement, is provided by <u>**`R`**</u> package <u>**`vcd`**</u>.',
-    x |> coef.Kappa(),
-    ci[1L], ci[2L],
-    x |> cut.Kappa() |> as.character()
-  )
-  attr(ret, which = 'bibentry') <- bibentry(
-    bibtype = 'article', 
-    key = 'Cohen60',
-    author = 'Jacob Cohen',
-    title = 'A Coefficient of Agreement for Nominal Scales',
-    journal = 'Educational and Psychological Measurement',
-    volume = '20',
-    number = '1',
-    pages = '37--46',
-    year = '1960',
-    doi = '10.1177/001316446002000104',
-  )
-  return(ret)
-}
 
 
 

@@ -4,14 +4,11 @@
 \alias{S3_Kappa}
 \alias{.pval.Kappa}
 \alias{endpoint.Kappa}
-\alias{Sprintf.Kappa}
 \title{Additional S3 Methods for \link[vcd]{Kappa}}
 \usage{
 .pval.Kappa(x)
 
 endpoint.Kappa(x)
-
-Sprintf.Kappa(x)
 }
 \arguments{
 \item{x}{a \link[vcd]{Kappa} object}

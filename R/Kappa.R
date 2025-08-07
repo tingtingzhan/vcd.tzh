@@ -85,6 +85,7 @@ md_.Kappa <- function(x, xnm, ...) {
   z2 <- if (inherits(x, what = 'Kappa2')) {
     c(
       '```{r}',
+      '#| echo: false',
       sprintf(fmt = '%s |> attr(which = \'x\', exact = TRUE) |> as_flextable(include.row_percent = FALSE, include.column_percent = FALSE, include.table_percent = FALSE)', xnm),
       '```'
     ) |> new(Class = 'md_lines')
@@ -145,6 +146,8 @@ nobs.Kappa <- function(object, ...) NA_integer_ # impossible to retrieve..
 #' @keywords internal
 #' @name S3_Kappa
 #' @importFrom stats pnorm
+#' @importFrom ecip .pval
+#' @export .pval.Kappa
 #' @export
 .pval.Kappa <- function(x) {
   # ?vcd:::print.Kappa; eh..
@@ -158,6 +161,8 @@ nobs.Kappa <- function(object, ...) NA_integer_ # impossible to retrieve..
 
 
 #' @rdname S3_Kappa
+#' @importFrom ecip endpoint
+#' @export endpoint.Kappa
 #' @export
 endpoint.Kappa <- function(x) quote(Agreement)
 

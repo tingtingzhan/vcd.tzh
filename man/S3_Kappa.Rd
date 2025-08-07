@@ -6,9 +6,9 @@
 \alias{endpoint.Kappa}
 \title{Additional S3 Methods for \link[vcd]{Kappa}}
 \usage{
-.pval.Kappa(x)
+\method{.pval}{Kappa}(x)
 
-endpoint.Kappa(x)
+\method{endpoint}{Kappa}(x)
 }
 \arguments{
 \item{x}{a \link[vcd]{Kappa} object}

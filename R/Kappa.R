@@ -16,19 +16,19 @@
 #' list(
 #'   'supervisor vs. own' = job1 |> vcd::Kappa(),
 #'   'management vs. own' = job2 |> vcd::Kappa()
-#' ) |> rmd.tzh::render_(file = 'Kappa')
+#' ) |> fastmd::render_(file = 'Kappa')
 #' 
 #' list(
 #'   'supervisor vs. own' = job1 |> Kappa2(),
 #'   'management vs. own' = job2 |> Kappa2()
-#' ) |> rmd.tzh::render_(file = 'Kappa2')
+#' ) |> fastmd::render_(file = 'Kappa2')
 #' 
 #' list(
 #'   'sec 1' = list(
 #'     'abc',
 #'     job1 |> Kappa2()
 #'   )
-#' ) |> rmd.tzh::render_(file = 'Kappa2_v2')
+#' ) |> fastmd::render_(file = 'Kappa2_v2')
 #' 
 #' @keywords internal
 #' @importFrom vcd Kappa
@@ -51,7 +51,7 @@ Kappa2 <- function(x, ...) {
 #' @param ... ..
 #' 
 #' @keywords internal
-#' @importFrom rmd.tzh md_
+#' @importFrom fastmd md_
 #' @importFrom stats confint
 #' @importFrom utils bibentry
 #' @importFrom methods new
@@ -89,7 +89,7 @@ md_.Kappa <- function(x, xnm, ...) {
     ) |> new(Class = 'md_lines')
   } else new(Class = 'md_lines')
   
-  c(z1, z2) # ?rmd.tzh::c.md_lines
+  c(z1, z2) # ?fastmd::c.md_lines
   
 }
 

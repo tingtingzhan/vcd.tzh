@@ -25,19 +25,19 @@ data('JobSatisfaction', package = 'vcd')
 list(
   'supervisor vs. own' = job1 |> vcd::Kappa(),
   'management vs. own' = job2 |> vcd::Kappa()
-) |> rmd.tzh::render_(file = 'Kappa')
+) |> fastmd::render_(file = 'Kappa')
 
 list(
   'supervisor vs. own' = job1 |> Kappa2(),
   'management vs. own' = job2 |> Kappa2()
-) |> rmd.tzh::render_(file = 'Kappa2')
+) |> fastmd::render_(file = 'Kappa2')
 
 list(
   'sec 1' = list(
     'abc',
     job1 |> Kappa2()
   )
-) |> rmd.tzh::render_(file = 'Kappa2_v2')
+) |> fastmd::render_(file = 'Kappa2_v2')
 
 }
 \keyword{internal}

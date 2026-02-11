@@ -1,16 +1,17 @@
 
 
-#' @title bibs in vcd.tzh package
+#' @title bibs in vcd package
+#' 
+#' @param key,... additional parameters of function \link[utils]{bibentry}
 #' 
 #' @keywords internal
-#' @importFrom utils bibentry
+#' @importFrom utils bibentry person
 #' @name vcd_bib
 #' @export
-.cohen60 <- \() {
+.cohen60 <- \(key = 'Cohen60', ...) {
   bibentry(
-    bibtype = 'article', 
-    key = 'Cohen60',
-    author = 'Jacob Cohen',
+    bibtype = 'article', key = key, ...,
+    author = person(given = 'Jacob', family = 'Cohen'),
     title = 'A Coefficient of Agreement for Nominal Scales',
     journal = 'Educational and Psychological Measurement',
     volume = '20',

@@ -3,11 +3,14 @@
 \name{vcd_bib}
 \alias{vcd_bib}
 \alias{.cohen60}
-\title{bibs in vcd.tzh package}
+\title{bibs in vcd package}
 \usage{
-.cohen60()
+.cohen60(key = "Cohen60", ...)
+}
+\arguments{
+\item{key, ...}{additional parameters of function \link[utils]{bibentry}}
 }
 \description{
-bibs in vcd.tzh package
+bibs in vcd package
 }
 \keyword{internal}

@@ -34,7 +34,6 @@ list(
 
 list(
   'sec 1' = list(
-    'abc',
     job1 |> Kappa2()
   )
 ) |> fastmd::render_(file = 'Kappa2_v2')

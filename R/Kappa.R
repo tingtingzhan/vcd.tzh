@@ -25,7 +25,6 @@
 #' 
 #' list(
 #'   'sec 1' = list(
-#'     'abc',
 #'     job1 |> Kappa2()
 #'   )
 #' ) |> fastmd::render_(file = 'Kappa2_v2')
@@ -61,7 +60,7 @@ md_.Kappa <- function(x, xnm, ...) {
   ci <- confint(x)['Weighted', ] # ?vcd:::confint.Kappa
   
   z1 <- sprintf(
-    fmt = '[Cohen\'s $\\kappa$ coefficient of agreement](https://en.wikipedia.org/wiki/Cohen%%27s_kappa) [@Cohen60] $\\kappa=%.2f$, 95%% confidence interval (%.2f, %.2f), reflecting a %s agreement, is provided by <u>**`R`**</u> package <u>**`vcd`**</u>.',
+    fmt = '[@Cohen60\'s $\\kappa$ coefficient of agreement](https://en.wikipedia.org/wiki/Cohen%%27s_kappa) $\\kappa=%.2f$, 95%% confidence interval (%.2f, %.2f), reflecting a %s agreement, is provided by <u>**`R`**</u> package <u>**`vcd`**</u>.',
     x |> coef.Kappa(),
     ci[1L], ci[2L],
     x |> cut.Kappa() |> as.character()

@@ -53,7 +53,6 @@ Kappa2 <- function(x, ...) {
 #' @keywords internal
 #' @importFrom fastmd md_
 #' @importFrom stats confint
-#' @importFrom utils bibentry
 #' @importFrom methods new
 #' @export md_.Kappa
 #' @export 
@@ -67,18 +66,7 @@ md_.Kappa <- function(x, xnm, ...) {
     ci[1L], ci[2L],
     x |> cut.Kappa() |> as.character()
   ) |> 
-    new(Class = 'md_lines', bibentry = bibentry(
-      bibtype = 'article', 
-      key = 'Cohen60',
-      author = 'Jacob Cohen',
-      title = 'A Coefficient of Agreement for Nominal Scales',
-      journal = 'Educational and Psychological Measurement',
-      volume = '20',
-      number = '1',
-      pages = '37--46',
-      year = '1960',
-      doi = '10.1177/001316446002000104',
-    ))
+    new(Class = 'md_lines', bibentry = .cohen60())
   
   z2 <- if (inherits(x, what = 'Kappa2')) {
     c(

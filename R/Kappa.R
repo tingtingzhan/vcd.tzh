@@ -70,11 +70,10 @@ md_.Kappa <- function(x, xnm, ...) {
   z2 <- if (inherits(x, what = 'Kappa2')) {
     c(
       '```{r}',
-      '#| echo: false',
       sprintf(fmt = '%s |> attr(which = \'x\', exact = TRUE) |> as_flextable(include.row_percent = FALSE, include.column_percent = FALSE, include.table_percent = FALSE)', xnm),
       '```'
     ) |> new(Class = 'md_lines')
-  } else new(Class = 'md_lines')
+  } # else NULL
   
   c(z1, z2) # ?fastmd::c.md_lines
   

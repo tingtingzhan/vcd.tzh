@@ -16,18 +16,18 @@
 #' list(
 #'   'supervisor vs. own' = job1 |> vcd::Kappa(),
 #'   'management vs. own' = job2 |> vcd::Kappa()
-#' ) |> fastmd::render2html(file = 'Kappa')
+#' ) |> fastmd::render2html()
 #' 
 #' list(
 #'   'supervisor vs. own' = job1 |> Kappa2(),
 #'   'management vs. own' = job2 |> Kappa2()
-#' ) |> fastmd::render2html(file = 'Kappa2')
+#' ) |> fastmd::render2html()
 #' 
 #' list(
 #'   'sec 1' = list(
 #'     job1 |> Kappa2()
 #'   )
-#' ) |> fastmd::render2html(file = 'Kappa2_v2')
+#' ) |> fastmd::render2html()
 #' 
 #' @keywords internal
 #' @importFrom vcd Kappa

@@ -10,7 +10,7 @@ Authors@R: c(person(given = 'Tingting', family = 'Zhan',
 Language: en-US
 Encoding: UTF-8
 License: GPL-2
-Depends: R (>= 4.5), vcd (== 1.4.13)
+Depends: R (>= 4.6), vcd (== 1.4.13)
 Imports: methods, fastmd, ecip
 Config/roxygen2/version: 8.0.0
 Config/roxygen2/markdown: TRUE

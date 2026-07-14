@@ -15,7 +15,7 @@ Kappa2(x, ...)
 Kappa with input confusion matrix
 }
 \details{
-Function \link[vcd]{Kappa} does not keep any info of the input (eh..)
+The function \link[vcd]{Kappa} does not keep any info of the input (eh..)
 }
 \examples{
 data('JobSatisfaction', package = 'vcd')

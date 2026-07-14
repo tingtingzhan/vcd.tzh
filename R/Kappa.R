@@ -6,7 +6,7 @@
 #' @param ... additional parameters of function \link[vcd]{Kappa}
 #' 
 #' @details
-#' Function \link[vcd]{Kappa} does not keep any info of the input (eh..)
+#' The function \link[vcd]{Kappa} does not keep any info of the input (eh..)
 #' 
 #' @examples
 #' data('JobSatisfaction', package = 'vcd')
@@ -41,19 +41,9 @@ Kappa2 <- function(x, ...) {
 
 
 
-#' @title R Markdown Lines for \link[vcd]{Kappa} or [Kappa2]
-#' 
-#' @param x \link[vcd]{Kappa} or [Kappa2] object
-#' 
-#' @param xnm ..
-#' 
-#' @param ... ..
-#' 
-#' @keywords internal
 #' @importFrom fastmd md_
 #' @importFrom stats confint
 #' @importFrom methods new
-#' @export md_.Kappa
 #' @export 
 md_.Kappa <- function(x, xnm, ...) {
 
@@ -65,32 +55,23 @@ md_.Kappa <- function(x, xnm, ...) {
     ci[1L], ci[2L],
     x |> cut.Kappa() |> as.character()
   ) |> 
-    new(Class = 'md_lines', bibentry = .cohen60())
+    new(Class = 'md', bibentry = .cohen60())
   
   z2 <- if (inherits(x, what = 'Kappa2')) {
     xnm |>
       sprintf(fmt = '%s |> attr(which = \'x\', exact = TRUE) |> as_flextable(include.row_percent = FALSE, include.column_percent = FALSE, include.table_percent = FALSE)') |> 
-      new(Class = 'md_lines', chunk.r = TRUE)
+      new(Class = 'md', chunk.r = TRUE)
   } # else NULL
   
-  c(z1, z2) # ?fastmd::c.md_lines
+  c(z1, z2) # ?fastmd::c.md
   
 }
 
 
 
 
-#' @title cut.Kappa
-#' 
-#' @param x a \link[vcd]{Kappa} object
-#' 
-#' @param ... trivial parameters of function \link[base]{cut.default}
-#' 
-#' @note
-#' Hard-coded cut-off values from \url{https://en.wikipedia.org/wiki/Cohen%27s_kappa#Interpreting_magnitude}.
-#' 
-#' @keywords internal
-#' @export cut.Kappa
+# @note
+# Hard-coded cut-off values from \url{https://en.wikipedia.org/wiki/Cohen%27s_kappa#Interpreting_magnitude}.
 #' @export
 cut.Kappa <- function(x, ...) {
   x |>
@@ -121,15 +102,8 @@ nobs.Kappa <- function(object, ...) NA_integer_ # impossible to retrieve..
 
 
 
-#' @title Additional S3 Methods for \link[vcd]{Kappa}
-#' 
-#' @param x a \link[vcd]{Kappa} object
-#' 
-#' @keywords internal
-#' @name S3_Kappa
 #' @importFrom stats pnorm
 #' @importFrom ecip .pval
-#' @export .pval.Kappa
 #' @export
 .pval.Kappa <- function(x) {
   # ?vcd:::print.Kappa; eh..
@@ -142,9 +116,7 @@ nobs.Kappa <- function(object, ...) NA_integer_ # impossible to retrieve..
 }
 
 
-#' @rdname S3_Kappa
 #' @importFrom ecip endpoint
-#' @export endpoint.Kappa
 #' @export
 endpoint.Kappa <- function(x) quote(Agreement)
 
